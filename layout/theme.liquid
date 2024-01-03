@@ -1,10 +1,19 @@
+<!doctype html>
 <html lang="en">
-  <head>
-    {{ content_for_header }}
-  </head>
-  <body>
-    <main>
-      {{ content_for_layout }}
-    </main>
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{ 'style.css' |  asset_url |  stylesheet_tag }}
+  {{ content_for_header }}
+
+  <title>{{ page_title }}</title>
+</head>
+
+<body>
+  <main>
+    {{ content_for_layout }}
+  </main>
+</body>
+
 </html>
