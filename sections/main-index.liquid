@@ -1,6 +1,30 @@
-<h1>Hello World</h1>
+<section class="mx-auto max-w-7xl px-6">
+  <div id="Hero__Section" class="h-[600px] flex flex-col justify-center">
+    <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">{{ shop.name }} Store</h1>
+    <p class="mt-6 text-lg leading-8 text-gray-600">{{ shop.description }}</p>
+  </div>
 
-<img src="{{ 'Catto.png' |  asset_url }}" />
+  <ul class="grid grid-cols-4 w-full gap-4">
+    {% for p in collections['frontpage'].products %}
+      <li class="col-span-1">
+        <a
+          href="{{ p.url }}"
+          id="Product__Card"
+          class="block overflow-hidden rounded-lg text-white hover:drop-shadow-lg hover:shadow-lg hover:-translate-y-[1.5px] transition-all">
+          <figure class="w-full">
+            <img src="{{ p.featured_image |  image_url }}" alt="{{ p.title }}" />
+          </figure>
+
+          <div class="p-4 bg-slate-800 ">
+            <h4>{{ p.title }}</h4>
+            <p>{{ p.price | money }}</p>
+          </div>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+
 
 {% schema %}
   {
