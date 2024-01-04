@@ -10,14 +10,14 @@
         <a
           href="{{ p.url }}"
           id="Product__Card"
-          class="block overflow-hidden rounded-lg text-white hover:drop-shadow-lg hover:shadow-lg hover:-translate-y-[1.5px] transition-all">
-          <figure class="w-full">
+          class="block overflow-hidden rounded-xl border bg-white hover:drop-shadow-lg hover:shadow-lg hover:-translate-y-[1.5px] transition-all">
+          <figure class="w-full aspect-auto">
             <img src="{{ p.featured_image |  image_url }}" alt="{{ p.title }}" />
           </figure>
 
-          <div class="p-4 bg-slate-800 ">
-            <h4>{{ p.title }}</h4>
-            <p>{{ p.price | money }}</p>
+          <div class="p-4 border-t">
+            <h4 class="text-lg font-medium">{{ p.title }}</h4>
+            <p class="font-light">{{ p.price | money }}</p>
           </div>
         </a>
       </li>

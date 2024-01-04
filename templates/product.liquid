@@ -1,3 +1,46 @@
 <section class="mx-auto max-w-7xl">
-    <h1>{{ product.title }} Page</h1>
+    <hgroup class="mb-8">
+        <h1 class="text-4xl font-medium">{{ product.title }}</h1>
+        <p></p>
+    </hgroup>
+    
+    <div class="flex gap-12">
+        <aside class="w-2/5">
+            <figure class="border rounded-xl overflow-hidden shadow-lg">
+                <img src="{{ product.featured_image |  image_url: width: 600 }}" alt="{{ product.title }}">
+            </figure>
+        </aside>
+
+        <aside class="w-3/5 flex flex-col gap-4">
+            <div class="text-2xl">
+                <span class="text-sm font-medium">Product Description</span>
+                <p>{{ product.description }}</p>
+            </div>
+
+            <div class="relative">
+                <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                    <div class="w-full border-t border-gray-300"></div>
+                </div>
+            </div>
+
+            <section>
+                {% form 'product', product, class: 'border flex flex-col gap-4' %} 
+                    <div>
+                        <label class="text-sm font-medium leading-6 text-gray-900 flex flex-col" for="sizes">
+                            Sizes
+                            <select name="sizes" id="size_selector" class="mt-2 w-56 block rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                {% for v in product.variants %} 
+                                    <option value="{{ v.id }}">{{ v.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                    </div>
+
+                    <div>
+                        <button type="submit">Add to Cart</button>
+                    </div>
+                {% endform %}
+            </section>
+        </aside>
+    </div>
 </section>
