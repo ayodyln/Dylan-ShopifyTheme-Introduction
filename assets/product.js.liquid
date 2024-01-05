@@ -1,0 +1,30 @@
+//! Product Page Globals
+const sizeInputLabels = document.querySelectorAll('label[data-input="size"]');
+const sizeInputs = document.querySelectorAll('label[data-input="size"] > input');
+
+// Function to handled input events and class updates
+function handleInputEvents(e) {
+  const { vid, available } = e.target.dataset;
+  let checked = e.target.checked
+
+  if (!JSON.parse(available)) return;
+  
+  const label = document.querySelector(`label[data-vid="${vid}"]`);
+
+  sizeInputs.forEach((i) => {
+    i.checked = false;
+    const currInputLabel = document.querySelector(`label[data-vid="${i.dataset.vid}"]`)
+    currInputLabel.classList.remove('border-transparent', 'bg-indigo-600', 'text-white', 'hover:bg-indigo-700')
+  });
+  
+  checked = true;
+
+  if (checked) {
+    label.classList.add('border-transparent', 'bg-indigo-600', 'text-white', 'hover:bg-indigo-700');
+  } 
+}
+
+// Exectute Mounted Functions
+window.onload = () => {
+  sizeInputs.forEach((input) => input.addEventListener('click', handleInputEvents));
+};

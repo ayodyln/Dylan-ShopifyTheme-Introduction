@@ -89,9 +89,9 @@ assign breadcrumb = ''
                         <legend class="sr-only">Choose a size</legend>
                         <div data-sizeInputs class="grid grid-cols-3 gap-3 sm:grid-cols-6">
                             {% for v in product.variants %}
-                            <label data-input="size" data-id="{{ v.id }}"
-                                class="flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1 focus:outline-none {% unless v.available %}opacity-25 cursor-not-allowed{% endunless %}">
-                                <input data-available="{{ v.available }}" data-size_id="{{ v.id }}" type="radio"
+                            <label data-input="size" data-vid="{{ v.id }}"
+                                class="flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1 focus:outline-none {% if v.available %}cursor-pointer{% else %}opacity-25 cursor-not-allowed{% endif %}">
+                                <input data-available="{{ v.available }}" data-vid="{{ v.id }}" type="radio"
                                     name="size-{{ v.id }}" value="{{ v.id }}" class="sr-only"
                                     aria-labelledby="size-choice-0-label">
                                 <span id="size-choice-0-label">{{ v.title }}</span>
