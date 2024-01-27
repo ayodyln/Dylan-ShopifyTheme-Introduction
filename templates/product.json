@@ -1,0 +1,11 @@
+{
+  "name": "Product-Index",
+  "wrapper": "section#product-index__wrapper",
+  "sections": {
+    "main": {
+      "type": "product-index",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}
