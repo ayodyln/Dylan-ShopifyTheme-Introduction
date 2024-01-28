@@ -7,6 +7,11 @@
         "id": "show_announcement",
         "label": "Show announcement",
         "default": true
+      }, {
+        "type": "color",
+        "id": "body_text",
+        "label": "Body text",
+        "default": "#000000"
       }
     ],
     "presets": [
@@ -20,7 +25,6 @@
 <section id="product-index__wrapper" class="max-w-4xl min-w-0 mx-auto p-4 grid grid-cols-1 gap-4">
   <hgroup class="flex justify-between items-start">
     <h2 class="text-2xl font-medium">{{ product.title }}</h2>
-    <h3 id="productHeader">Oi</h3>
     <p class="font-mono font-medium text-xl">{{ product.price | money }}</p>
   </hgroup>
 
