@@ -1,7 +1,14 @@
 {% schema %}
   {
     "name": "Product-Index",
-    "settings": [],
+    "settings": [
+      {
+        "type": "header",
+        "id": "productHeader",
+        "label": "product",
+        "content": ""
+      }
+    ],
     "presets": [
       {
         "name": "Product-Index"
@@ -13,13 +20,17 @@
 <section id="product-index__wrapper" class="max-w-4xl min-w-0 mx-auto p-4 grid grid-cols-1 gap-4">
   <hgroup class="flex justify-between items-start">
     <h2 class="text-2xl font-medium">{{ product.title }}</h2>
+    <h3 id="productHeader">Oi</h3>
     <p class="font-mono font-medium text-xl">{{ product.price | money }}</p>
   </hgroup>
 
   <div>
     <aside class="space-y-4">
       <figure class="overflow-hidden rounded-lg">
-        <img src="{{ product.featured_image |  image_url: width: 500 }}" alt="{{ product.title }}">
+        <img
+          class="w-full h-auto aspect-auto"
+          src="{{ product.featured_image |  image_url: width: 500 }}"
+          alt="{{ product.title }}">
       </figure>
 
       <p>{{ product.description }}</p>
@@ -27,42 +38,41 @@
 
     <aside>
       {% form 'product'
-        , product %}
-      {% comment %} Color {% endcomment %}
-      {% unless product.has_only_default_variant %}
-        {% for option in product.options_with_values %}
-            <div class="single-product__option-wrapper js">
-                <div class="product-option__{{ option.name | downcase }}"
-                     id="SingleOptionSelector-{{ forloop.index0 }}">
-                    {% for value in option.values %}
-                        {% liquid 
-                          assign option-name = option.name | downcase 
-                          assign product-handle = product.handle
-                          assign is_color = false
-                        %}
-                        
-                        {% if option-name contains 'color' or option-name contains 'colour' %}
-                            {% assign is_color = true %}
-                        {% endif %}
+        , product
+        , return_to: "back" %}
+        {% comment %} ! Checking for Default Variant; If there ISN'T a default, multiple inputs will be displayed. {% endcomment %}
+        {% if product.has_only_default_variant == false %}
+          {% for o in product.options_with_values %}
+            {% liquid
+              assign optionName = o.name | downcase
+              assign productHandle = product.handle
+            %}
 
-                        <input type="radio" name="{{ option-name }}-{{ product-handle }}"
-                               class="single-option-selector"
-                               data-single-option-selector
-                               data-index="option{{ option.position }}"
-                               value="{{ value | escape }}"
-                               data-color="{{ value | handleize }}"
-                               {% if option.selected_value == value %}checked="checked"{% endif %}
-                               id="variant_{{ option-name }}-{{ product-handle }}-{{ forloop.index0 }}"/>
-                        <label for="variant_{{ option-name }}-{{ product-handle }}-{{ forloop.index0 }}"
-                               {% if is_color %}style="background-color: {{ value | split: ' ' | last | handle }};{% endif %}">{{ value }}</label>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endfor %}
-      {% endunless %}
+            {{ optionName }}
+          {% endfor %}
+        {% else %}
+          {% comment %} ! Default selecter, find a way to circumnavigate this {% endcomment %}
+          {% liquid
+            assign defaultVariant = product.variants | first
+          %}
+          <input
+            type="hidden"
+            name="id"
+            value="{{ defaultVariant.id }}" />
+        {% endif %}
 
-      {% comment %} Size {% endcomment %}
+        {% comment %} Quantity {% endcomment %}
+        <input
+          type="number"
+          name="quantity"
+          value="1">
+
+        <!-- product add to cart -->
+        <button type="submit" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add To Cart</button>
+        <!-- end product add to cart -->
       {% endform %}
     </aside>
   </div>
 </section>
+
+<script src="{{ 'product.js' |  asset_url }}"></script>
