@@ -1,5 +1,21 @@
+{% schema %}
+  {
+    "name": "Main Index",
+    "settings": [],
+    "presets": [
+      {
+        "name": "Main Index"
+      }
+    ]
+  }
+{% endschema %}
+
 <section class="mx-auto max-w-7xl px-6">
-  {% render 'hero' %}
+  <hgroup id="Hero__Section" class="h-[600px] flex flex-col justify-center">
+    <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">{{ shop.name }} Store</h1>
+    <p class="mt-6 text-lg leading-8 text-gray-600">{{ shop.description }}</p>
+    <p>{{ section.settings.hero_text }}</p>
+  </hgroup>
 
   <div id="product" class="space-y-8">
     <h3 class="text-2xl font-semibold">{{ collections["frontpage"].title }} Collection</h3>
@@ -25,16 +41,3 @@
     </ul>
   </div>
 </section>
-
-
-{% schema %}
-  {
-    "name": "Main Index",
-    "settings": [],
-    "presets": [
-      {
-        "name": "Main Index"
-      }
-    ]
-  }
-{% endschema %}
