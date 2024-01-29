@@ -2,8 +2,13 @@
   "sections": {
     "main": {
       "type": "main-index",
-      "settings": {}
+      "settings": {
+        "bg_color": "#ff0000",
+        "message": "Hello!"
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
