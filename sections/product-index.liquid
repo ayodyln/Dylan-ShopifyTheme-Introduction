@@ -6,7 +6,7 @@
         "type": "color",
         "id": "product_text",
         "label": "Product text",
-        "default": "#00000"
+        "default": "#000000"
       }
     ],
     "presets": [
@@ -23,7 +23,7 @@
     <p class="font-mono font-medium text-xl">{{ product.price | money }}</p>
   </hgroup>
 
-  <div>
+  <div class="flex flex-col gap-4">
     <aside class="space-y-4">
       <figure class="overflow-hidden rounded-lg">
         <img
@@ -32,12 +32,13 @@
           alt="{{ product.title }}">
       </figure>
 
-      <p>{{ product.description }}</p>
+      <div class="text-lg">{{ product.content }}</div>
     </aside>
 
     <aside>
       {% form 'product'
         , product
+        , class: "flex flex-col gap-4"
         , return_to: "back" %}
         {% comment %} ! Checking for Default Variant; If there ISN'T a default, multiple inputs will be displayed. {% endcomment %}
         {% if product.has_only_default_variant == false %}
@@ -46,7 +47,6 @@
               assign optionName = o.name | downcase
               assign productHandle = product.handle
             %}
-
             {{ optionName }}
           {% endfor %}
         {% else %}
@@ -61,10 +61,18 @@
         {% endif %}
 
         {% comment %} Quantity {% endcomment %}
-        <input
-          type="number"
-          name="quantity"
-          value="1">
+        <div class="sm:col-span-4">
+          <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Quantity</label>
+          <div class="mt-2">
+            <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+              <input
+                type="number"
+                name="quantity"
+                value="1"
+                class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+            </div>
+          </div>
+        </div>
 
         <!-- product add to cart -->
         <button type="submit" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add To Cart</button>
