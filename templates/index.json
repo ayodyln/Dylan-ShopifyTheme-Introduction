@@ -3,7 +3,7 @@
     "main": {
       "type": "main-index",
       "settings": {
-        "bg_color": "#1773b0",
+        "bg_color": "#000000",
         "message": "Hello!"
       }
     }
