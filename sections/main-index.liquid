@@ -3,11 +3,6 @@
     "name": "Main Index",
     "settings": [
       {
-        "type": "color",
-        "id": "bg_color",
-        "label": "BG-Color",
-        "default": "#000"
-      }, {
         "type": "text",
         "id": "message",
         "label": "Message",
@@ -23,10 +18,7 @@
 {% endschema %}
 
 <section class="mx-auto max-w-7xl px-6">
-  <div
-    id="Hero__Section"
-    class="h-[600px] flex flex-col justify-center"
-    style="background-color: {{ section.settings.bg_color }};">
+  <div id="Hero__Section" class="h-[600px] flex flex-col justify-center">
     <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">{{ shop.name }} Store</h1>
     <p class="mt-6 text-lg leading-8 text-gray-600">{{ shop.description }}</p>
   </div>
