@@ -3,10 +3,15 @@
     "name": "Main Index",
     "settings": [
       {
-        "type": "color_background",
-        "id": "background",
-        "label": "Background",
+        "type": "color",
+        "id": "bg_color",
+        "label": "BG-Color",
         "default": "#000"
+      }, {
+        "type": "text",
+        "id": "message",
+        "label": "Message",
+        "default": "Hello!"
       }
     ],
     "presets": [
@@ -18,11 +23,11 @@
 {% endschema %}
 
 <section class="mx-auto max-w-7xl px-6">
-  <hgroup id="Hero__Section" class="h-[600px] flex flex-col justify-center bg-[{{ section.settings.background }}]">
+  <div id="Hero__Section" class="h-[600px] flex flex-col justify-center bg-[{{ section.settings.bg_color }}]">
     <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">{{ shop.name }} Store</h1>
     <p class="mt-6 text-lg leading-8 text-gray-600">{{ shop.description }}</p>
-    <p>{{ section.settings.hero_text }}</p>
-  </hgroup>
+    {{ section.settings.bg_color }}
+  </div>
 
   <div id="product" class="space-y-8">
     <h3 class="text-2xl font-semibold">{{ collections["frontpage"].title }} Collection</h3>
