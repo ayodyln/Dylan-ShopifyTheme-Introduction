@@ -1072,6 +1072,14 @@ video {
   background-color: rgb(255 255 255 / 0.9);
 }
 
+.bg-\[\] {
+  background-color: ;
+}
+
+.bg-\[\{\{\}\}\] {
+  background-color: {{}};
+}
+
 .bg-gradient-to-tr {
   background-image: linear-gradient(to top right, var(--tw-gradient-stops));
 }
