@@ -113,55 +113,7 @@
           , product
           , class: "flex flex-col gap-4"
           , return_to: "back" %}
-          {% comment %} ! Checking for Default Variant; If there ISN'T a default, multiple inputs will be displayed. {% endcomment %}
-          {% if product.has_only_default_variant == false %}
-            {% for o in product.options_with_values %}
-              {% liquid
-                assign optionName = o.name | downcase
-                assign productHandle = product.handle
-              %}
-
-              {% comment %}! Size Variant(s) {% endcomment %}
-              {% if optionName == "size" %}
-                <div class="mt-8">
-                  <div class="flex items-center justify-between">
-                    <h2 class="text-sm font-medium text-gray-900">{{ optionName | camelize }}</h2>
-                    <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">See sizing chart</a>
-                  </div>
-
-                  <fieldset class="mt-2">
-                    <legend class="sr-only">Choose a size</legend>
-                    <div class="grid grid-cols-3 gap-3 sm:grid-cols-6">
-                      {% for v in o.values %}
-                        <label class="flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1 cursor-pointer focus:outline-none">
-                          <input
-                            type="radio"
-                            name="size-choice"
-                            value="XXS"
-                            class="sr-only"
-                            aria-labelledby="size-choice-0-label">
-                          <span id="size-choice-0-label">{{ v }}</span>
-                        </label>
-                      {% endfor %}
-                    </div>
-                  </fieldset>
-                </div>
-              {% endif %}
-
-            {% endfor %}
-          {% else %}
-            {% comment %} ! Default selecter {% endcomment %}
-            {% liquid
-              assign defaultVariant = product.variants | first
-            %}
-
-            <input
-              type="hidden"
-              name="id"
-              value="{{ defaultVariant.id }}" />
-          {% endif %}
-
-          {% comment %} Quantity {% endcomment %}
+          {% comment %}* Quantity {% endcomment %}
           <div class="sm:col-span-4">
             <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Quantity</label>
             <div class="mt-2">
@@ -170,14 +122,34 @@
                   type="number"
                   name="quantity"
                   value="1"
+                  min="1"
                   class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
               </div>
             </div>
           </div>
 
-          <!-- product add to cart -->
+          <select
+            name="id"
+            class="no-js"
+            data-product-select>
+            {% for variant in product.variants %}
+              <option
+                {% if variant == current_variant %}
+                selected="selected"
+                {% endif %}
+                {% unless variant.available %}
+                disabled="disabled"
+                {% endunless %}
+                value="{{ variant.id }}">
+                {{ variant.title }}
+              </option>
+            {% endfor %}
+          </select>
+
+          {% comment %} Hidden Selected Variant {% endcomment %}
+
+          {% comment %}* Submit Button {% endcomment %}
           <button type="submit" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add To Cart</button>
-          <!-- end product add to cart -->
         {% endform %}
 
         <!-- Product details -->
