@@ -1,5 +1,6 @@
 // Product Page Javascript
 // https://www.youtube.com/watch?v=daqGfjCo8Y4
+
 //! Product Form Size Inputs
 // In Stock: "cursor-pointer",
 // Out of Stock: "opacity-25 cursor-not-allowed"
