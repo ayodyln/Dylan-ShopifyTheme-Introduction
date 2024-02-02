@@ -113,7 +113,7 @@
           , product
           , class: "flex flex-col gap-4" 
           , id: "product_form"
-          , return_to: "back" %}
+        %}
           {% comment %}! Swatches {% endcomment %}
           <section id="swatches__wrapper" class="space-y-4">
             {% for option in product.options_with_values %}
@@ -271,5 +271,4 @@
 <script>
   window.productData = {{ product | json }}
 </script>
-
 <script src="{{ 'product.js' |  asset_url }}" type="module"></script>

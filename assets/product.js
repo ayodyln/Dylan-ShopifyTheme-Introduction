@@ -20,11 +20,12 @@ document.querySelectorAll(`section#swatches__wrapper input[type="radio"]`).forEa
       [...selectedOptions].every(([_, v]) => variant.title.includes(v))
     );
 
+    //* Update the hidden input with the matched variant's id
     document.querySelector(`form#product_form > input[type="hidden"][name="id"]`).value = matchedVariant.id;
   })
 );
 
-//? Product Form Size Inputs
+//? Product Form Size Input Styles
 // In Stock: "cursor-pointer",
 // Out of Stock: "opacity-25 cursor-not-allowed"
 // Not Checked: "border-gray-200 bg-white text-gray-900 hover:bg-gray-50"
