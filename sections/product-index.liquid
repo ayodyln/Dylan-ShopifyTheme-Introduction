@@ -111,21 +111,69 @@
       <section class="mt-8 lg:col-span-5">
         {% form 'product'
           , product
-          , class: "flex flex-col gap-4"
+          , class: "flex flex-col gap-4" 
+          , id: "product_form"
           , return_to: "back" %}
-          {% comment %}* Quantity {% endcomment %}
-          <div>
-            <label for="location" class="block text-sm font-medium leading-6 text-gray-900">Variants</label>
-            <select
-              id="location"
-              name="location"
-              class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-              {% for variant in product.variants %}
-                <option value="{{ variant.id }}">{{ variant.title }}</option>
-              {% endfor %}
-            </select>
-          </div>
+          {% comment %}! Swatches {% endcomment %}
+          <section id="swatches__wrapper" class="space-y-4">
+            {% for option in product.options_with_values %}
+              <div id="{{ option.name }}__wrapper" class="space-y-2">
+                <h2 class="text-sm font-medium text-gray-900">{{ option.name }}</h2>
 
+                <fieldset id="{{ option.name }}-field">
+                  <legend class="sr-only">Choose a {{ option.name | downcase }}</legend>
+
+                  <div id="{{ option.name }}-values__wrapper" class="flex items-center gap-3">
+                    {% for value in option.values %}
+                      {% if option.name == 'Size' %}
+                        <label
+                          for="{{ option.name | handleize }}-{{ value | handleize }}"
+                          data-variant="{{ option.name | downcase }}"
+                          data-value="{{ value }}"
+                          class="flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1 cursor-pointer focus:outline-none {% if option.selected_value == value %} border-transparent bg-indigo-600 text-white hover:bg-indigo-700 ring-2 ring-indigo-500 ring-offset-2 {% endif %}">
+                          <input
+                            type="radio"
+                            name="{{ option.name }}"
+                            value="{{ value }}"
+                            {% if option.selected_value == value %}
+                            checked
+                            {% endif %}
+                            id="{{ option.name | handleize }}-{{ value | handleize }}"
+                            class="sr-only"
+                            aria-labelledby="size-choice-0-label">
+                          <span id="size-choice-0-label">{{ value }}</span>
+                        </label>
+                      {% endif %}
+
+                      {% if option.name == 'Color' %}
+                        <label
+                          data-variant="color"
+                          data-value="{{ value }}"
+                          class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-900 {% if option.selected_value == value %} ring ring-offset-1 {% endif %}">
+                          <input
+                            type="radio"
+                            name="color-choice"
+                            {% if option.selected_value == value %}
+                            checked
+                            {% endif %}
+                            value="{{ value }}"
+                            class="sr-only"
+                            aria-labelledby="color-choice-0-label">
+                          <span id="color-choice-0-label" class="sr-only">{{ value }}</span>
+                          <span
+                            aria-hidden="true"
+                            data-value="{{ value }}"
+                            class="h-8 w-8 bg-{{ value }} rounded-full border border-black border-opacity-10"></span>
+                        </label>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                </fieldset>
+              </div>
+            {% endfor %}
+          </section>
+
+          {% comment %}* Quantity {% endcomment %}
           <div class="sm:col-span-4">
             <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Quantity</label>
             <div class="mt-2">
@@ -140,7 +188,11 @@
             </div>
           </div>
 
-          {% comment %} Hidden Selected Variant {% endcomment %}
+          {% comment %}? Hidden Selected Variant {% endcomment %}
+          <input
+            type="hidden"
+            name="id"
+            value="{{ product.selected_or_first_available_variant.id }}">
 
           {% comment %}* Submit Button {% endcomment %}
           <button type="submit" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add To Cart</button>
@@ -216,5 +268,8 @@
   </div>
 </section>
 
+<script>
+  window.productData = {{ product | json }}
+</script>
 
-<script src="{{ 'product.js' |  asset_url }}"></script>
+<script src="{{ 'product.js' |  asset_url }}" type="module"></script>
