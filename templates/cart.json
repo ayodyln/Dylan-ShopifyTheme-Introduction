@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "cart-index",
+      "settings": {
+        "message": "Hello World :D"
+      }
+    }
+  },
+  "order": ["main"]
+}
